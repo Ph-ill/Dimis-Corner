@@ -1,0 +1,14 @@
+/* Custom CSS overrides for Dimi's Corner */
+
+/* Center the avatar image */
+#avatar {
+    text-align: center;
+    margin: 1em auto;
+    display: block;
+}
+
+/* Ensure the flower image is centered within the avatar container */
+#avatar .flower {
+    margin: 0 auto;
+    display: block;
+}
