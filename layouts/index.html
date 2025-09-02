@@ -1,0 +1,42 @@
+{{ define "title" }}
+{{ .Site.Title }}
+{{ end }}
+
+{{ define "main" }}
+<article id="top" class="clearfix">
+    <section>
+        <h2>{{ .Title }}</h2>
+        <div>{{ .Content }}</div>
+    </section>
+</article>
+
+{{ $posts := where .Site.RegularPages "Type" "posts" }}
+{{ if $posts }}
+{{ range $posts.ByDate.Reverse }}
+<article id="post-{{ .File.UniqueID }}">
+    <h2><a href="{{ .Permalink }}">{{ .Title }}</a></h2>
+    
+    {{ if .Params.tags }}
+    tags:
+    {{ range $i, $tag := .Params.tags }}
+    <a href="{{ "/tags/" | relURL }}{{ $tag | urlize }}">{{ $tag }}</a>{{ if ne $i (sub (len $.Params.tags) 1) }}, {{ end }}
+    {{ end }}
+    {{ end }}
+    
+    <div class="post-header">
+        @ <span class="timestamp">{{ .Date.Format "02/01/2006" }}</span>
+    </div>
+    
+    <div class="post-content">
+        {{ if .Summary }}
+        {{ .Summary }}
+        {{ else }}
+        {{ .Content | truncate 300 }}
+        {{ end }}
+    </div>
+    
+    <a href="{{ .Permalink }}">Read more...</a>
+</article>
+{{ end }}
+{{ end }}
+{{ end }}
