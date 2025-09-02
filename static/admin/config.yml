@@ -2,7 +2,7 @@
 backend:
   name: git-gateway
   repo: Ph-ill/dimis-corner
-  branch: main
+  branch: master
   identity_url: https://auth.decapbridge.com/sites/44828913-4b58-40f0-ab4d-91fd3b13c133
   gateway_url: https://gateway.decapbridge.com
 
