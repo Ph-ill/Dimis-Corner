@@ -41,7 +41,7 @@ languages:
   #         less: "もっと読む"
 
 permalinks:
-  posts: "/posts/:filename/"
+  posts: "/posts/:contentbasename/"
 
 params:
   # themes made by neopost: light-blue, dark-blue, light-green, light-yellow, light-pink, light-purple
