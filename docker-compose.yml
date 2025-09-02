@@ -1,0 +1,35 @@
+version: "3.8"
+
+services:
+  # This service builds the Hugo site.
+  hugo:
+    image: klakegg/hugo:ext-node-alpine
+    container_name: hugo_builder
+    command: server --destination /src/public --bind=0.0.0.0 --buildDrafts --buildFuture
+    volumes:
+      # Maps the entire Git repo to /src in the container.
+      - /home/phill/docker-configs/dimi-hugo:/src
+    networks:
+      - Shared
+    restart: unless-stopped
+
+  # This service serves the built static files via Nginx.
+  hugo_server:
+    image: nginx:1.27-alpine
+    container_name: hugo_webserver
+    volumes:
+      # Mounts the 'public' folder that Hugo builds.
+      - ./public:/usr/share/nginx/html:ro
+      # Mounts the Nginx configuration file.
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    networks:
+      - Shared
+    depends_on:
+      - hugo
+    restart: unless-stopped
+
+# Defines the external network used by Nginx Proxy Manager.
+# Make sure this matches the network name your NPM uses.
+networks:
+  Shared:
+    external: true
