@@ -26,90 +26,54 @@ public_folder: /images
 
 collections:
   - name: "posts"
-    label: "Blog Posts (English)"
-    folder: "content/en/posts"
+    label: "Blog Posts"
+    folder: "content/posts"
     create: true
-    slug: "{{slug}}"
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
       - {label: "Title", name: "title", widget: "string"}
       - {label: "Publish Date", name: "date", widget: "datetime"}
       - {label: "Draft", name: "draft", widget: "boolean", default: false}
-      - {label: "Author", name: "author", widget: "string", default: "Dimi"}
+      - {label: "Featured Image", name: "image", widget: "image", required: false}
+      - {label: "Description", name: "description", widget: "text", required: false}
       - {label: "Tags", name: "tags", widget: "list", required: false}
-      - {label: "Title Images", name: "title-images", widget: "list", required: false, field: {label: "Image", name: "image", widget: "image"}}
-      - {label: "Ending Images", name: "ending-images", widget: "list", required: false, field: {label: "Image", name: "image", widget: "image"}}
-      - {label: "Table of Contents", name: "table-of-contents", widget: "boolean", default: false}
       - {label: "Body", name: "body", widget: "markdown"}
   
-  - name: "sidebar"
-    label: "Sidebar Content"
+  - name: "pages"
+    label: "Pages"
     files:
-      - label: "Bio"
-        name: "bio"
-        file: "content/en/sidebar/bio.md"
-        fields:
-          - {label: "Body", name: "body", widget: "markdown"}
-      - label: "Basic Info"
-        name: "basic-info"
-        file: "content/en/sidebar/basic-info.md"
-        fields:
-          - {label: "Body", name: "body", widget: "markdown"}
-      - label: "Sidebar Settings"
-        name: "sidebar-settings"
-        file: "content/en/sidebar/_index.md"
-        fields:
-          - {label: "Avatar Path", name: "icon-path", widget: "image"}
-          - {label: "Use Flower Shape", name: "icon-use-flower-shape", widget: "boolean", default: false}
-          - label: "Navigation Links"
-            name: "links"
-            widget: "list"
-            fields:
-              - {label: "Name", name: "name", widget: "string"}
-              - {label: "Link", name: "link", widget: "string"}
-              
-  - name: "welcome"
-    label: "Welcome Header"
-    files:
-      - label: "Welcome Content"
-        name: "welcome-header"
-        file: "content/en/welcome-header/_index.md"
+      - label: "Homepage"
+        name: "homepage"
+        file: "content/_index.md"
         fields:
           - {label: "Title", name: "title", widget: "string"}
-          - {label: "Header Image", name: "image", widget: "image"}
-          - label: "Introduction"
-            name: "intro"
-            widget: "list"
-            field: {label: "Paragraph", name: "paragraph", widget: "text"}
-          - label: "Features List"
-            name: "list"
-            widget: "object"
-            fields:
-              - {label: "List Title", name: "name", widget: "string"}
-              - label: "Items"
-                name: "items"
-                widget: "list"
-                field: {label: "Item", name: "item", widget: "string"}
+          - {label: "Body", name: "body", widget: "markdown"}
+      - label: "About"
+        name: "about"
+        file: "content/about.md"
+        fields:
+          - {label: "Title", name: "title", widget: "string"}
+          - {label: "Body", name: "body", widget: "markdown"}
           
   - name: "settings"
     label: "Site Settings"
     files:
       - label: "Configuration"
         name: "config"
-        file: "hugo.yaml"
+        file: "config.toml"
         fields:
           - {label: "Site Title", name: "title", widget: "string"}
           - {label: "Base URL", name: "baseURL", widget: "string"}
           - {label: "Language Code", name: "languageCode", widget: "string", default: "en-us"}
-          - label: "Site Parameters"
+          - label: "Theme Parameters"
             name: "params"
             widget: "object"
             fields:
               - label: "Color Theme"
                 name: "theme"
                 widget: "select"
-                options: ["light-blue", "dark-blue", "light-green", "light-yellow", "light-pink", "light-purple", "meow"]
-                default: "meow"
-              - {label: "Posts Per Page", name: "posts-per-page", widget: "number", default: 5}
+                options: ["light-blue", "dark-blue", "light-green", "light-yellow", "light-pink", "light-purple"]
+                default: "light-purple"
 
 # Enable editorial workflow for content review
 publish_mode: editorial_workflow
