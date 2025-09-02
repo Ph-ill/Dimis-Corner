@@ -6,7 +6,7 @@ services:
     image: klakegg/hugo:ext-alpine
     container_name: hugo_builder
     working_dir: /src
-    command: ["hugo", "--minify", "--gc", "--enableGitInfo", "--destination", "/output"]
+    command: ["sh", "-c", "hugo --minify --gc --enableGitInfo --destination /output"]
     volumes:
       # Mount the repository files (pulled by Portainer GitOps)
       - .:/src
