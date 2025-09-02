@@ -3,7 +3,7 @@ version: "3.8"
 services:
   # This service builds the Hugo site.
   hugo:
-    image: klakegg/hugo:ext-node-alpine
+    image: docker.io/hugomods/hugo:ext-node-alpine
     container_name: hugo_builder
     command: server --destination /src/public --bind=0.0.0.0 --buildDrafts --buildFuture
     volumes:
