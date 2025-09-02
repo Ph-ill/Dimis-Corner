@@ -1,17 +1,17 @@
 version: "3.8"
 
 services:
-  # This service builds the Hugo site.
+  # This service builds the Hugo static site.
   hugo:
-    image: docker.io/hugomods/hugo:ext-node-alpine
+    image: klakegg/hugo:ext-alpine
     container_name: hugo_builder
-    command: server --destination /src/public --bind=0.0.0.0 --buildDrafts --buildFuture
     volumes:
-      # Maps the entire Git repo to /src in the container.
-      - /home/phill/docker-configs/dimi-hugo:/src
-    networks:
-      - Shared
-    restart: unless-stopped
+      # Maps the current directory to /src in the container.
+      - .:/src
+    working_dir: /src
+    command: >
+      sh -c "hugo --minify --gc --enableGitInfo --destination /src/public"
+    restart: "no"
 
   # This service serves the built static files via Nginx.
   hugo_server:
