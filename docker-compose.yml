@@ -1,35 +1,13 @@
 version: "3.8"
 
 services:
-  # This service builds the Hugo static site.
+  # This service builds and serves the Hugo site using multi-stage Dockerfile
   hugo:
-    image: klakegg/hugo:ext-alpine
-    container_name: hugo_builder
-    working_dir: /src
-    command: ["sh", "-c", "hugo --minify --gc --enableGitInfo --destination /output"]
-    volumes:
-      # Mount the repository files (pulled by Portainer GitOps)
-      - .:/src
-      # Shared volume for the built static files
-      - hugo_output:/output
-    restart: "no"
-
-  # This service serves the built static files via Nginx (production server).
-  nginx:
-    image: nginx:1.27-alpine
+    build: .
     container_name: hugo_nginx
-    volumes:
-      # Mounts the built static files from Hugo
-      - hugo_output:/usr/share/nginx/html:ro
     networks:
       - Shared
-    depends_on:
-      - hugo
     restart: unless-stopped
-
-# Named volume for sharing built files between containers
-volumes:
-  hugo_output:
 
 # Defines the external network used by Nginx Proxy Manager.
 # Make sure this matches the network name your NPM uses.
