@@ -1,3 +1,7 @@
 baseURL = 'https://dimiscorner.coolphill.com'
 languageCode = 'en-us'
 title = "Dimi's Corner"
+theme = "neopost"
+
+[params]
+theme = "light-purple"
