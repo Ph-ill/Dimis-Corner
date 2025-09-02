@@ -1,17 +1,16 @@
 version: "3.8"
 
 services:
-  # This service builds the Hugo static site from the Git repository.
+  # This service builds the Hugo static site.
   hugo:
     image: klakegg/hugo:ext-alpine
     container_name: hugo_builder
     working_dir: /src
     command: >
-      sh -c "
-        git clone https://github.com/Ph-ill/dimis-corner.git /src &&
-        hugo --minify --gc --enableGitInfo --destination /output
-      "
+      sh -c "hugo --minify --gc --enableGitInfo --destination /output"
     volumes:
+      # Mount the repository files (pulled by Portainer GitOps)
+      - .:/src
       # Shared volume for the built static files
       - hugo_output:/output
     restart: "no"
