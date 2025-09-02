@@ -1,125 +1,204 @@
-# WARP.md
+# WARP.md - AI Agent Context for Dimi's Corner
 
-This file provides guidance to WARP (warp.dev) when working with code in this repository.
+This file provides guidance to AI agents (including Warp AI) when working with this Hugo blog project.
 
-## Project Overview
+---
 
-**Dimi's Corner** is a Hugo static site deployed as a containerized application using Docker and Nginx. The project follows a production-ready architecture with multi-stage Docker builds and is designed for deployment via Portainer GitOps workflow.
+## 🌐 Project Overview
+
+**Dimi's Corner** is a Hugo static site using the neopost theme, deployed via Docker and Portainer GitOps.
 
 - **Site URL**: https://dimiscorner.coolphill.com
-- **Static Site Generator**: Hugo
-- **Containerization**: Docker with multi-stage builds
-- **Web Server**: Nginx (for serving static files)
-- **Deployment**: Docker Compose + Portainer GitOps
+- **Static Site Generator**: Hugo v0.149.0
+- **Theme**: neopost (with custom "meow" color scheme)
+- **Content Management**: Decap CMS at `/admin`
+- **Architecture**: Multi-stage Docker build → Nginx serving
+- **Deployment**: Portainer GitOps (auto-deploy from GitHub master branch)
+- **Server**: Remote server at `phill@192.168.1.39`
 
-## Architecture
+---
 
-### Container Architecture
-The project uses a **multi-stage Docker build**:
-1. **Stage 1 (Builder)**: Uses `klakegg/hugo:ext-alpine` to build the Hugo site
-2. **Stage 2 (Runtime)**: Uses `nginx:1.27-alpine` to serve the generated static files
+## 📁 Current Project Structure
 
-### Directory Structure
 ```
 dimis-corner/
-├── config.toml          # Hugo configuration
-├── content/             # Hugo content (Markdown files)
-│   └── _index.md       # Homepage content
-├── themes/             # Hugo themes (currently empty)
-├── nginx/              # Nginx configuration
-│   └── default.conf    # Custom Nginx server configuration
-├── Dockerfile          # Multi-stage build definition
-└── docker-compose.yml  # Container orchestration
+├── hugo.yaml                    # Hugo configuration (YAML format)
+├── content/
+│   ├── en/                     # English content (multilingual setup)
+│   │   ├── posts/              # Blog posts
+│   │   ├── sidebar/            # Sidebar content (bio, basic-info, _index.md)
+│   │   └── welcome-header/     # Homepage welcome section
+│   └── jp/                     # Japanese content (disabled)
+├── themes/neopost/             # Neopost theme (git submodule)
+├── data/custom_themes.yaml    # Custom color themes ("meow" theme)
+├── static/                     # Static assets
+│   ├── admin/                  # Decap CMS files
+│   │   ├── index.html
+│   │   └── config.yml
+│   └── *.png                   # Theme images (cat.png, flower.png, etc.)
+├── Dockerfile                  # Multi-stage build with error checking
+└── WARP.md                     # This file
 ```
 
-### Network Configuration
-- The application connects to an external Docker network named `Shared`
-- This network is managed by Nginx Proxy Manager for reverse proxy functionality
-- Container exposes port 80 internally
+---
 
-## Development Commands
+## ⚠️ Critical Understanding: Hugo Build Process
 
-### Building and Running
+### The Docker Build Issue
+**IMPORTANT**: This project had recurring issues where Docker builds would fail silently, causing the site to revert to Nginx default page. The Dockerfile now includes comprehensive error checking and debugging.
 
-#### Build the Docker image:
+### How the Build Works:
+1. **Stage 1 (hugomods/hugo:exts)**: Builds Hugo site → `/src/public/`
+2. **Stage 2 (nginx:1.27-alpine)**: Serves static files from `/usr/share/nginx/html/`
+
+### If Site Shows Nginx Default Page:
 ```bash
-docker build -t dimis-corner .
+# Manual fix (temporary):
+docker run --rm --network=none -v $(pwd):/src -w /src hugomods/hugo:exts --minify --gc
+cat public/index.html | ssh phill@192.168.1.39 "docker exec -i hugo_nginx sh -c 'cat > /usr/share/nginx/html/index.html'"
 ```
 
-#### Run with Docker Compose:
+### Deployment Flow:
+1. Push to GitHub master branch
+2. Portainer GitOps detects change
+3. Rebuilds Docker container automatically
+4. New container should serve updated site
+
+---
+
+## 🎨 Theme & Content System
+
+### Neopost Theme Features:
+- **Multilingual support** (English/Japanese)
+- **Custom color schemes** via `data/custom_themes.yaml`
+- **Current theme**: "meow" (light blue/pink)
+- **Image galleries**: title-images, ending-images
+- **Read more** functionality with configurable length
+- **Sidebar system**: bio, basic-info, navigation links
+
+### Content Structure:
+- **Posts**: `content/en/posts/*.md`
+- **Sidebar**: `content/en/sidebar/{bio.md, basic-info.md, _index.md}`
+- **Welcome**: `content/en/welcome-header/_index.md`
+
+### Post Front Matter Format:
+```yaml
+---
+title: "Post Title"
+date: "2025-02-09T10:00:00-03:00"
+tags: ["tag1", "tag2"]
+title-images: ["/photo1.png"]
+ending-images: ["/photo2.png", "/photo3.png"]
+author: "Dimi"
+draft: false
+table-of-contents: false
+---
+```
+
+---
+
+## 🛠️ Development Commands
+
+### Local Hugo Build (for testing):
 ```bash
-docker-compose up -d
+# Test build locally
+docker run --rm --network=none -v $(pwd):/src -w /src hugomods/hugo:exts --minify --gc
+
+# Check generated files
+ls -la public/
+head public/index.html
 ```
 
-#### Stop the application:
+### Container Management:
 ```bash
-docker-compose down
+# Check remote container status
+ssh phill@192.168.1.39 "docker ps --filter 'name=hugo'"
+
+# View container logs
+ssh phill@192.168.1.39 "docker logs hugo_nginx --tail 20"
+
+# Access container
+ssh phill@192.168.1.39 "docker exec -it hugo_nginx sh"
 ```
 
-#### Rebuild and restart:
-```bash
-docker-compose up -d --build
+### Content Management:
+- **Admin Interface**: https://dimiscorner.coolphill.com/admin
+- **Authentication**: GitHub OAuth
+- **Content Path**: `content/en/posts/`
+- **Media**: Upload to `static/` directory
+
+---
+
+## 🔧 Configuration Files
+
+### `hugo.yaml` - Site Configuration
+```yaml
+title: "Dimi's Corner"
+baseURL: 'https://dimiscorner.coolphill.com'
+theme: "neopost"
+languages:
+  en:
+    contentDir: content/en
+params:
+  theme: "meow"  # Custom theme in data/custom_themes.yaml
+  posts-per-page: 5
 ```
 
-### Content Development
-
-#### Add new content:
-Create new Markdown files in the `content/` directory following Hugo's content structure.
-
-#### Edit site configuration:
-Modify `config.toml` to change site title, baseURL, or other Hugo settings.
-
-### Local Development (with Hugo installed)
-If Hugo is installed locally, you can develop without Docker:
-
-```bash
-# Install Hugo first (not available in current environment)
-hugo server -D  # Run development server with drafts
-hugo --minify   # Build for production
+### `data/custom_themes.yaml` - Color Schemes
+```yaml
+- name: "meow"
+  site-bg: "/flowertile.png"
+  accent-color: "#f55cc0"
+  # ... more color definitions
 ```
 
-### Container Management
-
-#### View running containers:
-```bash
-docker-compose ps
+### `static/admin/config.yml` - Decap CMS
+```yaml
+backend:
+  name: github
+  repo: Ph-ill/dimis-corner
+collections:
+  - name: "posts"
+    folder: "content/en/posts"
 ```
 
-#### View container logs:
-```bash
-docker-compose logs -f hugo
-```
+---
 
-#### Enter the container:
-```bash
-docker exec -it hugo_nginx sh
-```
+## ⚡ Quick Fixes & Common Issues
 
-### Git Workflow
-The project follows a Git-based deployment model:
-- Changes pushed to master trigger automatic deployments via Portainer GitOps
-- The deployment history shows evolution from various container configurations to the current multi-stage setup
+### Site Shows Nginx Default Page:
+1. Check if Portainer rebuild completed
+2. Manual fix: Run local build → copy index.html to container
+3. Check Docker build logs for Hugo errors
 
-## Key Files
+### Admin Panel Not Loading:
+1. Verify `static/admin/index.html` and `config.yml` exist
+2. Check GitHub authentication setup
+3. Simple config uses GitHub backend (not git-gateway)
 
-- **`config.toml`**: Hugo site configuration (title, baseURL, language)
-- **`Dockerfile`**: Multi-stage build with Hugo compilation and Nginx serving
-- **`docker-compose.yml`**: Defines the service and external network configuration
-- **`nginx/default.conf`**: Custom Nginx configuration for serving static files
-- **`content/_index.md`**: Homepage content in Markdown format
+### Theme Issues:
+1. Verify `themes/neopost/` contains theme files
+2. Check `hugo.yaml` has `theme: "neopost"`
+3. Ensure required content structure exists (sidebar, welcome-header)
 
-## Deployment Notes
+---
 
-- The site is deployed to `https://dimiscorner.coolphill.com`
-- Uses Portainer for container orchestration
-- Requires the `Shared` external Docker network to be created before deployment
-- The multi-stage build optimizes the final image size by excluding Hugo build tools from the runtime image
-- Hugo builds with `--minify --gc --enableGitInfo` flags for production optimization
+## 📋 AI Agent Guidelines
 
-## Theme Management
+### When Making Changes:
+1. **Test locally first** with Hugo Docker container
+2. **Commit and push** to trigger Portainer deployment
+3. **Verify deployment** - check if site loads correctly
+4. **If broken**: Fix immediately or revert commit
 
-Currently, no specific Hugo theme is configured. The site uses Hugo's default rendering. To add a theme:
+### Content Creation:
+- Use `content/en/posts/` directory
+- Follow neopost theme frontmatter format
+- Include `title-images` and `ending-images` for galleries
+- Test with local Hugo build before pushing
 
-1. Add the theme to the `themes/` directory (via git submodule or direct download)
-2. Update `config.toml` to specify the theme: `theme = "theme-name"`
-3. Rebuild the Docker image to include theme changes
+### Never:
+- Use terminal commands to read files (use read_files tool)
+- Make assumptions about Hugo build success
+- Ignore Docker build failures
+- Break the existing theme structure
