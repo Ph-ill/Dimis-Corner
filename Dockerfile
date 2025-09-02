@@ -8,7 +8,12 @@ WORKDIR /src
 COPY . .
 
 # Build the Hugo site with production settings
-RUN hugo --minify --gc --enableGitInfo
+# Use conditional Git info - only if .git directory exists
+RUN if [ -d ".git" ]; then \
+        hugo --minify --gc --enableGitInfo; \
+    else \
+        hugo --minify --gc; \
+    fi
 
 # Stage 2: Serve the site with Nginx
 FROM nginx:1.27-alpine
