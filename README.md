@@ -5,7 +5,7 @@ A Hugo-based blog built for a friend, based on the [Hugo](https://gohugo.io/) st
 ## Credits
 
 - **[Hugo](https://gohugo.io/)** - Fast static site generator
-- **[neopost theme](https://github.com/colorchestra/hugo-neopost-theme)** - Original Hugo theme by colorchestra
+- **[neopost theme](https://github.com/salatine/neopost)** - Original Hugo theme by colorchestra
 
 ## Functional Modifications
 
