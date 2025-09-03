@@ -1,4 +1,4 @@
-# WARP.md - AI Agent Context for Dimi's Corner
+# WARP.md - AI Agent Context for Hypnagogic Optics
 
 This file provides guidance to AI agents (including Warp AI) when working with this Hugo blog project.
 
@@ -6,7 +6,7 @@ This file provides guidance to AI agents (including Warp AI) when working with t
 
 ## 🌐 Project Overview
 
-**Dimi's Corner** is a Hugo static site using the neopost theme, deployed via Docker and Portainer GitOps.
+**Hypnagogic Optics** is a Hugo static site using the neopost theme, deployed via Docker and Portainer GitOps.
 
 - **Site URL**: https://dimiscorner.coolphill.com
 - **Static Site Generator**: Hugo v0.149.0
@@ -21,7 +21,7 @@ This file provides guidance to AI agents (including Warp AI) when working with t
 ## 📁 Current Project Structure
 
 ```
-dimis-corner/
+hypnagogic-optics/
 ├── hugo.yaml                    # Hugo configuration (YAML format)
 ├── content/
 │   ├── en/                     # English content (multilingual setup)
@@ -133,7 +133,7 @@ ssh phill@192.168.1.39 "docker exec -it hugo_nginx sh"
 
 ### `hugo.yaml` - Site Configuration
 ```yaml
-title: "Dimi's Corner"
+title: "Hypnagogic Optics"
 baseURL: 'https://dimiscorner.coolphill.com'
 theme: "neopost"
 languages:

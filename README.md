@@ -1,4 +1,4 @@
-# Dimi's Corner
+# Hypnagogic Optics
 
 A Hugo-based blog built for a friend, based on the [Hugo](https://gohugo.io/) static site generator and the [neopost](https://github.com/salatine/neopost) theme.
 
@@ -73,9 +73,9 @@ A copy of the license is available in the `LICENSE` file.
 
 ### Content License
 
-All creative content, including all text and images found within the blog posts and portfolio sections, is the exclusive property of [**Dimi's Corner**](https://github.com/amfetuummobile).
+All creative content, including all text and images found within the blog posts and portfolio sections, is the exclusive property of [**Hypnagogic Optics**](https://github.com/amfetuummobile).
 
-**© 2025 Dimi's Corner. All Rights Reserved.**
+**© 2025 Hypnagogic Optics. All Rights Reserved.**
 
 This content is **not** open source. Permission is required for any reuse, republication, or distribution.
 
