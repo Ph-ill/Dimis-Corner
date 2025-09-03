@@ -59,13 +59,14 @@
             background-color: var(--bg-color2);
             margin: 0 auto;
             font-size: 4em;
-            max-width: 48rem;
-            padding: 6px 12px;
+            max-width: 60rem;
+            padding: 12px 24px;
             border-radius: 1em;
             border: 4px double var(--outline-color);
             text-align: center;
             position: relative;
             display: block;
+            width: fit-content;
         }
         
         #dynamic-title a {
@@ -82,11 +83,14 @@
             color: #000000;
             z-index: 1;
             pointer-events: none;
+            width: 100%;
+            white-space: nowrap;
         }
         
         #title-text {
             position: relative;
             z-index: 2;
+            white-space: nowrap;
         }
         
         .dynamic-letter {
