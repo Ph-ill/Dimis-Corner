@@ -57,6 +57,26 @@ The site uses Docker multi-stage builds and deploys via Portainer GitOps:
 └── admin/               # Decap CMS configuration
 ```
 
-## License
+---
 
-This project builds upon Hugo (Apache 2.0) and the neopost theme. See original project licenses for details.
+## 📜 Licensing
+
+This repository contains both the source code for the blog's theme and infrastructure, as well as the blog's creative content. These two components are licensed separately.
+
+### Code License
+
+All source code used to generate and display this site is licensed under the **MIT License**. You can find a copy of the license in the `LICENSE` file.
+
+### Content License
+
+All creative content, including all text and images found within the blog posts, is the exclusive property of **Dimi's Corner**.
+
+**© 2025 Dimi's Corner. All Rights Reserved.**
+
+This content is **not** open source. Permission is required for any reuse, republication, or distribution.
+
+### Dependencies
+
+This project builds upon:
+- **[Hugo](https://gohugo.io/)** (Apache 2.0 License)
+- **[neopost theme](https://github.com/colorchestra/hugo-neopost-theme)** (See original theme license)
