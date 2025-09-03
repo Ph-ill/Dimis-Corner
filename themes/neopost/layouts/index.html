@@ -62,29 +62,6 @@
         </nav>
     </aside>
     <main>
-        <article id="top" class="clearfix">
-            {{ with .Site.GetPage "section" "/welcome-header/_index.md" }}
-            <section>
-            <div class="img-right">
-                <img src="{{ .Params.image }}">
-            </div>
-            <div>
-            <h1>{{ .Params.title }}</h1>
-            {{ range .Params.intro }}
-                <p>{{ . }}</p>
-            {{ end }}
-            </div>
-            </section>
-            <section>
-            <h4>{{ .Params.list.name }}</h4>
-                <ul>
-                {{ range .Params.list.items }}
-                    <li>{{ . }}</li>
-                {{ end }}
-                </ul>
-            </section>
-            {{ end }}
-        </article>
     {{ $limit := index (index .Site.Params "read-more") "length-limit" }}
     {{ $pages := where .Site.RegularPages "Section" "posts" }}
     {{ range $index, $page := (.Paginate $pages (or (index .Site.Params "posts-per-page") 5)).Pages }}
