@@ -31,11 +31,21 @@
 * {
     box-sizing: border-box;
     font-family: 'BIZ UDMincho', 'Times New Roman', Times, serif;
-    /* Disable anti-aliasing for pixelated/crisp text */
-    -webkit-font-smoothing: none;
-    -moz-osx-font-smoothing: unset;
-    font-smooth: never;
-    text-rendering: optimizeSpeed;
+    /* Aggressive anti-aliasing disable for pixelated text */
+    -webkit-font-smoothing: none !important;
+    -moz-osx-font-smoothing: unset !important;
+    font-smooth: never !important;
+    text-rendering: optimizeSpeed !important;
+    /* Additional properties for crisp rendering */
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-crisp-edges;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    /* Force font display */
+    font-display: block;
+    /* Disable subpixel rendering */
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
 }
 
 @-moz-document url-prefix() {
@@ -72,6 +82,11 @@ body {
     margin: 0;
     font-size: 14px;
     color: var(--text-color);
+    /* Additional anti-aliasing disable on body */
+    -webkit-font-smoothing: none !important;
+    -moz-osx-font-smoothing: unset !important;
+    font-smooth: never !important;
+    text-rendering: optimizeSpeed !important;
 }
 
 /* Allow JavaScript to override background with higher specificity */
