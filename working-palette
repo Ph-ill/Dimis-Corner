@@ -1,0 +1,14 @@
+--red-pantone: #e63946ff;
+Use this for links and highlighted text
+
+--honeydew: #f1faeeff;
+Use this for light background colours
+
+--non-photo-blue: #a8dadcff;
+Use this for borders and outlines
+
+--cerulean: #457b9dff;
+Use this for general text
+
+--berkeley-blue: #1d3557ff;
+Use this for title text

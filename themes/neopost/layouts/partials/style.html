@@ -1,11 +1,8 @@
 <style>
-/* Local BIZ UDMincho font for crisp rendering */
 @font-face {
-    font-family: 'BIZ UDMincho';
-    src: url('/BIZUDMincho-Regular.ttf');
-    font-display: block;
-    font-weight: normal;
-    font-style: normal;
+    font-family: bizudmincho;
+    src: url("/fnt/BIZUDMincho-Regular.ttf");
+    font-display: swap;
 }
 
 {{ $themeName := .Site.Params.theme }}
@@ -37,20 +34,6 @@
 
 * {
     box-sizing: border-box;
-    font-family: 'BIZ UDMincho', 'Times New Roman', Times, serif;
-    /* Comprehensive crisp text rendering */
-    -webkit-font-smoothing: none !important;
-    -moz-osx-font-smoothing: grayscale !important;
-    font-smooth: never !important;
-    text-rendering: optimizeSpeed !important;
-    /* Multiple image-rendering values for browser compatibility */
-    image-rendering: -moz-crisp-edges !important;
-    image-rendering: -webkit-crisp-edges !important;
-    image-rendering: pixelated !important;
-    image-rendering: crisp-edges !important;
-    /* Additional sharpening */
-    text-shadow: none !important;
-    font-synthesis: none !important;
 }
 
 @-moz-document url-prefix() {
@@ -82,33 +65,23 @@
 }
 
 body {
-    background-color: var(--bg-color);
-    background-image: var(--site-bg);
-    margin: 0;
-    font-size: 14px;
-    color: var(--text-color);
-    /* Working anti-aliasing disable */
+    font-family: bizudmincho, serif;
     -webkit-font-smoothing: none;
     -moz-osx-font-smoothing: grayscale;
     font-smooth: never;
     text-rendering: optimizeSpeed;
     image-rendering: crisp-edges;
+    background-color: var(--bg-color);
+    background-image: var(--site-bg);
+    margin: 0;
+    font-size: 14px;
+    color: var(--text-color);
 }
 
 /* Allow JavaScript to override background with higher specificity */
 body[style*="background-image"] {
     background-color: transparent !important;
 }
-
-p, h1, h2, h3, h4, h5, h6, span, div, a, li {
-    image-rendering: -moz-crisp-edges !important;
-    image-rendering: -webkit-crisp-edges !important; 
-    image-rendering: pixelated !important;
-    image-rendering: crisp-edges !important;
-    -webkit-font-smoothing: none !important;
-    -moz-osx-font-smoothing: grayscale !important;
-}
-
 p {line-height: 1.5em;}
 
 div.tags {

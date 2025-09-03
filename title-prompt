@@ -1,0 +1,14 @@
+Ok now I want to work on a dynamic title design system.
+
+The title text should choose from a group of fonts currently (comic sans, Times new roman), I will increase the number of fonts in the future.
+
+Each letter of the title text should be one of the following colours chosen at random on page load:
+#41BEDB
+#EB7DDA
+#FFAFDB
+#FFFF63
+#E2E2E2
+
+You should not have any letters next to each other of the same colour.
+
+Behind this text there should be a duplicate set of title text in black shifted slightly down and to the right to represent a drop shadow.
