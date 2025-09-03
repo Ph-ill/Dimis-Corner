@@ -1,0 +1,280 @@
+{{ define "main" }}
+    {{ if .IsTranslated }}
+    <nav class="languages links">
+        <ul>
+        {{ range .Translations }}
+        <li>
+            <a href="{{ .RelPermalink }}">{{ or (.Language.LanguageName) (.Language.Lang) }}</a>
+        </li>
+        {{ end }}
+        </ul>
+    </nav>
+    {{ end }}
+    <div id="content">
+    <aside id="sidebar">
+        <div id="avatar">
+            {{ with .Site.GetPage "section" "/sidebar/_index.md" }}
+            <img class="flower" src="{{ index .Params "icon-path" }}">
+            {{ end }}
+        </div>
+        
+        <div id="bio">
+        {{ with .Site.GetPage "section" "/sidebar/bio.md" }}
+            {{ .Content | safeHTML }}
+        {{ end }}
+        </div>
+        
+        <div class="small-box">
+            {{ with .Site.GetPage "section" "/sidebar/basic-info.md" }}
+                {{ .Content | safeHTML }}
+            {{ end }}
+            </ul>
+        </div>
+
+        {{ if .Site.Params.sidebar.tags.enable }}
+        <div>
+            <div class="tags">
+                <p class="tags">Tags</p>
+            </div>
+
+            <ul class="tags">
+            {{ $tags_limit := (or (index .Site.Params.sidebar.tags "limit") 5) }}
+            {{ $more_tags_text := (or (index .Site.Params.sidebar.tags "more-text") "more tags...") }}
+            {{ $tags := .Site.Taxonomies.tags | sort }}
+            {{ range $tags | first $tags_limit }}<li><a href="{{ .Page.Permalink }}">{{ .Page.Title }}</a></li>{{ end }}
+            </ul>
+            {{ if gt (len $tags) $tags_limit }}
+            <div class="tags">
+                <a href="{{ relLangURL (printf "/tags") }}"><b>{{ $more_tags_text }}</b></a>
+            </div>
+        </div>
+        {{ end }}
+        {{ end }}
+        
+        <nav class="links">
+            <ul>
+            {{ with .Site.GetPage "section" "/sidebar/_index.md" }}
+            {{ range .Params.links }}
+                <li><a href="{{ .link }}">{{ .name }}</a></li>
+            {{ end }}
+            {{ end }}
+            </ul>
+        </nav>
+    </aside>
+    <main>
+        <article>
+            <!-- Extract year from URL path -->
+            {{ $urlParts := split .RelPermalink "/" }}
+            {{ $year := index $urlParts 2 }}
+            
+            <div class="archive-breadcrumb">
+                <a href="/archive/">Archive</a> > <span>{{ $year }}</span>
+            </div>
+            
+            <h1>Archive for {{ $year }}</h1>
+            
+            <!-- Filter posts by year -->
+            {{ $posts := where .Site.RegularPages "Section" "posts" }}
+            {{ $yearPosts := where $posts ".Date.Format" "2006" $year }}
+            
+            {{ if gt (len $yearPosts) 0 }}
+                <!-- Group by month -->
+                {{ $postsByMonth := $yearPosts.GroupByDate "January" }}
+                
+                <div class="year-archive-summary">
+                    <p>{{ len $yearPosts }} {{ if eq (len $yearPosts) 1 }}post{{ else }}posts{{ end }} published in {{ $year }}</p>
+                </div>
+                
+                <div class="year-archive-months">
+                    {{ range $postsByMonth }}
+                        {{ $month := .Key }}
+                        {{ $monthPosts := .Pages }}
+                        
+                        <div class="month-section">
+                            <h2 class="month-header">
+                                <a href="/archive/{{ $year | lower }}/{{ $month | lower }}/">{{ $month }}</a>
+                                <span class="post-count">({{ len $monthPosts }} {{ if eq (len $monthPosts) 1 }}post{{ else }}posts{{ end }})</span>
+                            </h2>
+                            
+                            <div class="month-posts">
+                                {{ range $monthPosts }}
+                                <div class="post-entry">
+                                    <div class="post-date">{{ .Date.Format "Jan 2" }}</div>
+                                    <div class="post-info">
+                                        <h3 class="post-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+                                        {{ if .Summary }}
+                                        <div class="post-summary">{{ .Summary | plainify | truncate 150 }}</div>
+                                        {{ end }}
+                                        {{ if .Params.tags }}
+                                        <div class="post-tags">
+                                            {{ range .Params.tags }}
+                                            <span class="tag"><a href="{{ relLangURL (printf "/tags/%s" (urlize .)) }}">#{{ . }}</a></span>
+                                            {{ end }}
+                                        </div>
+                                        {{ end }}
+                                    </div>
+                                </div>
+                                {{ end }}
+                            </div>
+                        </div>
+                    {{ end }}
+                </div>
+            {{ else }}
+                <div class="archive-empty">
+                    <p>No posts found for {{ $year }}.</p>
+                    <a href="/archive/">← Back to archive</a>
+                </div>
+            {{ end }}
+        </article>
+    </main>
+    </div>
+    
+    <style>
+        .archive-breadcrumb {
+            margin-bottom: 1rem;
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+        
+        .archive-breadcrumb a {
+            color: var(--link-color);
+            text-decoration: none;
+        }
+        
+        .archive-breadcrumb a:hover {
+            color: var(--accent-color);
+        }
+        
+        .year-archive-summary {
+            background-color: var(--bg-color2);
+            padding: 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 0.3rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .year-archive-months {
+            margin-top: 2rem;
+        }
+        
+        .month-section {
+            margin-bottom: 3rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 2rem;
+        }
+        
+        .month-section:last-child {
+            border-bottom: none;
+        }
+        
+        .month-header {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--special-text-color);
+        }
+        
+        .month-header a {
+            text-decoration: none;
+            color: var(--link-color);
+            font-weight: bold;
+        }
+        
+        .month-header a:hover {
+            color: var(--accent-color);
+        }
+        
+        .post-count {
+            font-size: 1rem;
+            font-weight: normal;
+            color: var(--text-color);
+            margin-left: 0.5rem;
+        }
+        
+        .month-posts {
+            margin-left: 1rem;
+        }
+        
+        .post-entry {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: var(--bg-color2);
+            border: 1px solid var(--border-color);
+            border-radius: 0.3rem;
+        }
+        
+        .post-date {
+            flex-shrink: 0;
+            width: 4rem;
+            font-weight: bold;
+            color: var(--special-text-color);
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        
+        .post-info {
+            flex: 1;
+        }
+        
+        .post-title {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.1rem;
+        }
+        
+        .post-title a {
+            color: var(--link-color);
+            text-decoration: none;
+        }
+        
+        .post-title a:hover {
+            color: var(--accent-color);
+        }
+        
+        .post-summary {
+            color: var(--text-color);
+            font-size: 0.9rem;
+            line-height: 1.4;
+            margin-bottom: 0.5rem;
+        }
+        
+        .post-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+        }
+        
+        .tag {
+            font-size: 0.8rem;
+        }
+        
+        .tag a {
+            color: var(--link-color);
+            text-decoration: none;
+            padding: 0.2rem 0.4rem;
+            background-color: var(--select-color);
+            border-radius: 0.2rem;
+        }
+        
+        .tag a:hover {
+            color: var(--accent-color);
+            background-color: var(--border-color);
+        }
+        
+        .archive-empty {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-color);
+        }
+        
+        .archive-empty a {
+            color: var(--link-color);
+            text-decoration: none;
+        }
+        
+        .archive-empty a:hover {
+            color: var(--accent-color);
+        }
+    </style>
+{{ end }}

@@ -1,0 +1,367 @@
+{{ define "main" }}
+    {{ if .IsTranslated }}
+    <nav class="languages links">
+        <ul>
+        {{ range .Translations }}
+        <li>
+            <a href="{{ .RelPermalink }}">{{ or (.Language.LanguageName) (.Language.Lang) }}</a>
+        </li>
+        {{ end }}
+        </ul>
+    </nav>
+    {{ end }}
+    <div id="content">
+    <aside id="sidebar">
+        <div id="avatar">
+            {{ with .Site.GetPage "section" "/sidebar/_index.md" }}
+            <img class="flower" src="{{ index .Params "icon-path" }}">
+            {{ end }}
+        </div>
+        
+        <div id="bio">
+        {{ with .Site.GetPage "section" "/sidebar/bio.md" }}
+            {{ .Content | safeHTML }}
+        {{ end }}
+        </div>
+        
+        <div class="small-box">
+            {{ with .Site.GetPage "section" "/sidebar/basic-info.md" }}
+                {{ .Content | safeHTML }}
+            {{ end }}
+            </ul>
+        </div>
+
+        {{ if .Site.Params.sidebar.tags.enable }}
+        <div>
+            <div class="tags">
+                <p class="tags">Tags</p>
+            </div>
+
+            <ul class="tags">
+            {{ $tags_limit := (or (index .Site.Params.sidebar.tags "limit") 5) }}
+            {{ $more_tags_text := (or (index .Site.Params.sidebar.tags "more-text") "more tags...") }}
+            {{ $tags := .Site.Taxonomies.tags | sort }}
+            {{ range $tags | first $tags_limit }}<li><a href="{{ .Page.Permalink }}">{{ .Page.Title }}</a></li>{{ end }}
+            </ul>
+            {{ if gt (len $tags) $tags_limit }}
+            <div class="tags">
+                <a href="{{ relLangURL (printf "/tags") }}"><b>{{ $more_tags_text }}</b></a>
+            </div>
+        </div>
+        {{ end }}
+        {{ end }}
+        
+        <nav class="links">
+            <ul>
+            {{ with .Site.GetPage "section" "/sidebar/_index.md" }}
+            {{ range .Params.links }}
+                <li><a href="{{ .link }}">{{ .name }}</a></li>
+            {{ end }}
+            {{ end }}
+            </ul>
+        </nav>
+    </aside>
+    <main>
+        <article>
+            <!-- Extract year and month from URL path -->
+            {{ $urlParts := split .RelPermalink "/" }}
+            {{ $year := index $urlParts 2 }}
+            {{ $monthSlug := index $urlParts 3 }}
+            
+            <!-- Convert month slug to proper month name -->
+            {{ $monthNames := dict "january" "January" "february" "February" "march" "March" "april" "April" "may" "May" "june" "June" "july" "July" "august" "August" "september" "September" "october" "October" "november" "November" "december" "December" }}
+            {{ $month := index $monthNames $monthSlug }}
+            
+            <div class="archive-breadcrumb">
+                <a href="/archive/">Archive</a> > <a href="/archive/{{ $year | lower }}/">{{ $year }}</a> > <span>{{ $month }}</span>
+            </div>
+            
+            <h1>{{ $month }} {{ $year }}</h1>
+            
+            <!-- Filter posts by year and month -->
+            {{ $posts := where .Site.RegularPages "Section" "posts" }}
+            {{ $yearPosts := where $posts ".Date.Format" "2006" $year }}
+            {{ $monthPosts := where $yearPosts ".Date.Format" "January" $month }}
+            
+            {{ if gt (len $monthPosts) 0 }}
+                <div class="month-archive-summary">
+                    <p>{{ len $monthPosts }} {{ if eq (len $monthPosts) 1 }}post{{ else }}posts{{ end }} published in {{ $month }} {{ $year }}</p>
+                </div>
+                
+                <div class="month-archive-posts">
+                    {{ range $monthPosts.ByDate.Reverse }}
+                    <article class="post-card">
+                        <header class="post-header">
+                            <div class="post-meta">
+                                <time class="post-date" datetime="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">
+                                    {{ .Date.Format "Monday, January 2, 2006" }}
+                                </time>
+                                {{ if .Params.tags }}
+                                <div class="post-tags">
+                                    {{ range .Params.tags }}
+                                    <span class="tag"><a href="{{ relLangURL (printf "/tags/%s" (urlize .)) }}">#{{ . }}</a></span>
+                                    {{ end }}
+                                </div>
+                                {{ end }}
+                            </div>
+                            <h2 class="post-title">
+                                <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+                            </h2>
+                        </header>
+                        
+                        {{ if .Summary }}
+                        <div class="post-summary">
+                            {{ .Summary }}
+                        </div>
+                        {{ end }}
+                        
+                        <footer class="post-footer">
+                            <a href="{{ .RelPermalink }}" class="read-more">Read more →</a>
+                            {{ if .Params.author }}
+                            <div class="post-author">by {{ .Params.author }}</div>
+                            {{ end }}
+                        </footer>
+                    </article>
+                    {{ end }}
+                </div>
+                
+                <!-- Navigation to adjacent months -->
+                <nav class="month-navigation">
+                    {{ $prevMonth := "" }}
+                    {{ $nextMonth := "" }}
+                    {{ $allMonths := slice "January" "February" "March" "April" "May" "June" "July" "August" "September" "October" "November" "December" }}
+                    {{ $currentIndex := 0 }}
+                    
+                    <!-- Find current month index -->
+                    {{ range $i, $m := $allMonths }}
+                        {{ if eq $m $month }}
+                            {{ $currentIndex = $i }}
+                        {{ end }}
+                    {{ end }}
+                    
+                    <!-- Calculate previous and next months -->
+                    {{ if gt $currentIndex 0 }}
+                        {{ $prevMonth = index $allMonths (sub $currentIndex 1) }}
+                    {{ end }}
+                    {{ if lt $currentIndex 11 }}
+                        {{ $nextMonth = index $allMonths (add $currentIndex 1) }}
+                    {{ end }}
+                    
+                    <div class="month-nav-links">
+                        {{ if $prevMonth }}
+                        <a href="/archive/{{ $year | lower }}/{{ $prevMonth | lower }}/" class="prev-month">
+                            ← {{ $prevMonth }} {{ $year }}
+                        </a>
+                        {{ end }}
+                        
+                        {{ if $nextMonth }}
+                        <a href="/archive/{{ $year | lower }}/{{ $nextMonth | lower }}/" class="next-month">
+                            {{ $nextMonth }} {{ $year }} →
+                        </a>
+                        {{ end }}
+                    </div>
+                </nav>
+                
+            {{ else }}
+                <div class="archive-empty">
+                    <p>No posts found for {{ $month }} {{ $year }}.</p>
+                    <a href="/archive/{{ $year | lower }}/">← Back to {{ $year }}</a>
+                </div>
+            {{ end }}
+        </article>
+    </main>
+    </div>
+    
+    <style>
+        .archive-breadcrumb {
+            margin-bottom: 1rem;
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+        
+        .archive-breadcrumb a {
+            color: var(--link-color);
+            text-decoration: none;
+        }
+        
+        .archive-breadcrumb a:hover {
+            color: var(--accent-color);
+        }
+        
+        .month-archive-summary {
+            background-color: var(--bg-color2);
+            padding: 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 0.3rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .month-archive-posts {
+            margin-top: 2rem;
+        }
+        
+        .post-card {
+            background-color: var(--bg-color2);
+            border: 2px solid var(--border-color);
+            border-radius: 0.5rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: border-color 0.3s ease;
+        }
+        
+        .post-card:hover {
+            border-color: var(--accent-color);
+        }
+        
+        .post-header {
+            margin-bottom: 1rem;
+        }
+        
+        .post-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .post-date {
+            color: var(--special-text-color);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .post-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+        }
+        
+        .tag {
+            font-size: 0.8rem;
+        }
+        
+        .tag a {
+            color: var(--link-color);
+            text-decoration: none;
+            padding: 0.2rem 0.5rem;
+            background-color: var(--select-color);
+            border-radius: 0.3rem;
+            transition: all 0.2s ease;
+        }
+        
+        .tag a:hover {
+            color: var(--accent-color);
+            background-color: var(--border-color);
+        }
+        
+        .post-title {
+            margin: 0;
+            font-size: 1.5rem;
+            line-height: 1.3;
+        }
+        
+        .post-title a {
+            color: var(--link-color);
+            text-decoration: none;
+        }
+        
+        .post-title a:hover {
+            color: var(--accent-color);
+        }
+        
+        .post-summary {
+            color: var(--text-color);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        
+        .post-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .read-more {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+        
+        .read-more:hover {
+            color: var(--link-color);
+        }
+        
+        .post-author {
+            color: var(--text-color);
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+        
+        .month-navigation {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 2px solid var(--border-color);
+        }
+        
+        .month-nav-links {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        
+        .prev-month,
+        .next-month {
+            color: var(--link-color);
+            text-decoration: none;
+            padding: 0.75rem 1.5rem;
+            background-color: var(--bg-color2);
+            border: 2px solid var(--border-color);
+            border-radius: 0.3rem;
+            transition: all 0.3s ease;
+        }
+        
+        .prev-month:hover,
+        .next-month:hover {
+            background-color: var(--select-color);
+            color: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+        
+        .archive-empty {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-color);
+        }
+        
+        .archive-empty a {
+            color: var(--link-color);
+            text-decoration: none;
+        }
+        
+        .archive-empty a:hover {
+            color: var(--accent-color);
+        }
+        
+        @media (max-width: 768px) {
+            .post-meta {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .month-nav-links {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .post-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+{{ end }}
