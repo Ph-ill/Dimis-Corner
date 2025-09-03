@@ -98,10 +98,7 @@
             display: inline-block;
         }
         
-        .font-comic { font-family: 'Comic Neue', cursive !important; }
-        .font-times { font-family: 'Times New Roman', Times, serif !important; }
-        .font-biz { font-family: 'BIZ UDMincho', serif !important; }
-        .font-simsun { font-family: simsun, serif !important; }
+        /* Remove font classes - using default site font only */
         
         /* Override default h1 styling for our dynamic title */
         header > #dynamic-title {
@@ -121,16 +118,7 @@
                 '#E2E2E2'  // Light gray
             ];
             
-            const titleFonts = [
-                'font-comic',
-                'font-times', 
-                'font-biz',
-                'font-simsun'
-            ];
-            
-            function getRandomFont() {
-                return titleFonts[Math.floor(Math.random() * titleFonts.length)];
-            }
+            /* No font randomization - using default site font */
             
             function getRandomColor(excludeColor = null) {
                 let availableColors = titleColors.filter(color => color !== excludeColor);
@@ -148,9 +136,6 @@
                 let textHTML = '';
                 let lastColor = null;
                 
-                // Choose ONE random font for the entire title
-                const titleFont = getRandomFont();
-                
                 for (let i = 0; i < titleText.length; i++) {
                     const char = titleText[i];
                     
@@ -163,11 +148,11 @@
                     const randomColor = getRandomColor(lastColor);
                     lastColor = randomColor;
                     
-                    // Shadow version (black, same font for all)
-                    shadowHTML += `<span class="dynamic-letter ${titleFont}" style="color: #000000;">${char}</span>`;
+                    // Shadow version (black, default font)
+                    shadowHTML += `<span class="dynamic-letter" style="color: #000000;">${char}</span>`;
                     
-                    // Main text version (colorful, same font for all)
-                    textHTML += `<span class="dynamic-letter ${titleFont}" style="color: ${randomColor};">${char}</span>`;
+                    // Main text version (colorful, default font)
+                    textHTML += `<span class="dynamic-letter" style="color: ${randomColor};">${char}</span>`;
                 }
                 
                 shadowElement.innerHTML = shadowHTML;
