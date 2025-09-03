@@ -50,9 +50,113 @@
             }
         });
     </script>
+    
+    <!-- Dynamic Title System -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap');
+        
+        #dynamic-title {
+            position: relative;
+            display: inline-block;
+        }
+        
+        #dynamic-title a {
+            position: relative;
+            display: inline-block;
+            text-decoration: none;
+        }
+        
+        #title-shadow {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            color: #000000;
+            z-index: 1;
+            pointer-events: none;
+        }
+        
+        #title-text {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .dynamic-letter {
+            display: inline-block;
+        }
+        
+        .font-comic { font-family: 'Comic Neue', cursive !important; }
+        .font-times { font-family: 'Times New Roman', Times, serif !important; }
+        .font-biz { font-family: 'BIZ UDMincho', serif !important; }
+    </style>
+    
+    <script>
+        // Dynamic Title System
+        document.addEventListener('DOMContentLoaded', function() {
+            const titleColors = [
+                '#41BEDB', // Bright blue
+                '#EB7DDA', // Pink/magenta  
+                '#FFAFDB', // Light pink
+                '#FFFF63', // Bright yellow
+                '#E2E2E2'  // Light gray
+            ];
+            
+            const titleFonts = [
+                'font-comic',
+                'font-times', 
+                'font-biz'
+            ];
+            
+            function getRandomFont() {
+                return titleFonts[Math.floor(Math.random() * titleFonts.length)];
+            }
+            
+            function getRandomColor(excludeColor = null) {
+                let availableColors = titleColors.filter(color => color !== excludeColor);
+                return availableColors[Math.floor(Math.random() * availableColors.length)];
+            }
+            
+            function generateTitleStyling() {
+                const shadowElement = document.getElementById('title-shadow');
+                const textElement = document.getElementById('title-text');
+                
+                if (!shadowElement || !textElement) return;
+                
+                const titleText = shadowElement.textContent;
+                let shadowHTML = '';
+                let textHTML = '';
+                let lastColor = null;
+                
+                for (let i = 0; i < titleText.length; i++) {
+                    const char = titleText[i];
+                    
+                    if (char === ' ') {
+                        shadowHTML += ' ';
+                        textHTML += ' ';
+                        continue;
+                    }
+                    
+                    const randomFont = getRandomFont();
+                    const randomColor = getRandomColor(lastColor);
+                    lastColor = randomColor;
+                    
+                    // Shadow version (black)
+                    shadowHTML += `<span class="dynamic-letter ${randomFont}" style="color: #000000;">${char}</span>`;
+                    
+                    // Main text version (colorful)
+                    textHTML += `<span class="dynamic-letter ${randomFont}" style="color: ${randomColor};">${char}</span>`;
+                }
+                
+                shadowElement.innerHTML = shadowHTML;
+                textElement.innerHTML = textHTML;
+            }
+            
+            // Generate synchronized styling for both shadow and main text
+            generateTitleStyling();
+        });
+    </script>
 </head>
 <body>
-        <header><h1 id="{{ .Site.Title }}"><a href="/"><img src="/title.png" alt="{{ .Site.Title }}" style="max-width: 100%; height: auto;"></a></h1></header>
+        <header><h1 id="dynamic-title"><a href="/"><span id="title-shadow">{{ .Site.Title }}</span><span id="title-text">{{ .Site.Title }}</span></a></h1></header>
 <main>
     {{ block "main" . }}{{ end }}
     {{ if .Param "nextprev" }}{{ partial "nextprev.html" . }}{{ end }}
