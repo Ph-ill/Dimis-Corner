@@ -75,7 +75,7 @@
             
             <!-- Filter posts by year -->
             {{ $posts := where .Site.RegularPages "Section" "posts" }}
-            {{ $yearPosts := where $posts ".Date.Format" "2006" $year }}
+            {{ $yearPosts := where $posts ".Date.Year" (int $year) }}
             
             {{ if gt (len $yearPosts) 0 }}
                 <!-- Group by month -->

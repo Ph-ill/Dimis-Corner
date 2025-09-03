@@ -80,8 +80,8 @@
             
             <!-- Filter posts by year and month -->
             {{ $posts := where .Site.RegularPages "Section" "posts" }}
-            {{ $yearPosts := where $posts ".Date.Format" "2006" $year }}
-            {{ $monthPosts := where $yearPosts ".Date.Format" "January" $month }}
+            {{ $yearPosts := where $posts ".Date.Year" (int $year) }}
+            {{ $monthPosts := where $yearPosts ".Date.Month" (index (dict "January" 1 "February" 2 "March" 3 "April" 4 "May" 5 "June" 6 "July" 7 "August" 8 "September" 9 "October" 10 "November" 11 "December" 12) $month) }}
             
             {{ if gt (len $monthPosts) 0 }}
                 <div class="month-archive-summary">
