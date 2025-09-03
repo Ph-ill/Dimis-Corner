@@ -56,14 +56,23 @@
         @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap');
         
         #dynamic-title {
+            background-color: var(--bg-color2);
+            margin: 0 auto;
+            font-size: 2em;
+            max-width: 48rem;
+            padding: 6px 12px;
+            border-radius: 1em;
+            border: 4px double var(--outline-color);
+            text-align: center;
             position: relative;
-            display: inline-block;
+            display: block;
         }
         
         #dynamic-title a {
             position: relative;
             display: inline-block;
             text-decoration: none;
+            color: inherit;
         }
         
         #title-shadow {
@@ -87,6 +96,12 @@
         .font-comic { font-family: 'Comic Neue', cursive !important; }
         .font-times { font-family: 'Times New Roman', Times, serif !important; }
         .font-biz { font-family: 'BIZ UDMincho', serif !important; }
+        
+        /* Override default h1 styling for our dynamic title */
+        header > #dynamic-title {
+            filter: none !important;
+            color: inherit !important;
+        }
     </style>
     
     <script>
