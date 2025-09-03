@@ -1,5 +1,12 @@
 <style>
-@import url('https://fonts.googleapis.com/css2?family=BIZ+UDMincho:wght@400;700&display=swap');
+/* Local BIZ UDMincho font for crisp rendering */
+@font-face {
+    font-family: 'BIZ UDMincho';
+    src: url('/BIZUDMincho-Regular.ttf');
+    font-display: block;
+    font-weight: normal;
+    font-style: normal;
+}
 
 {{ $themeName := .Site.Params.theme }}
 {{ $theme := index (where .Site.Data.themes "name" $themeName) 0 }}
