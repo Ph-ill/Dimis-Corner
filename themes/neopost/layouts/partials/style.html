@@ -1,4 +1,6 @@
 <style>
+@import url('https://fonts.googleapis.com/css2?family=BIZ+UDMincho:wght@400;700&display=swap');
+
 {{ $themeName := .Site.Params.theme }}
 {{ $theme := index (where .Site.Data.themes "name" $themeName) 0 }}
 {{ $custom_themes := (index .Site.Data "custom_themes") }}
@@ -28,7 +30,7 @@
 
 * {
     box-sizing: border-box;
-    font-family: "Times New Roman", Times, serif;
+    font-family: 'BIZ UDMincho', 'Times New Roman', Times, serif;
 }
 
 @-moz-document url-prefix() {
