@@ -67,6 +67,11 @@ body {
     color: var(--text-color);
 }
 
+/* Allow JavaScript to override background with higher specificity */
+body[style*="background-image"] {
+    background-color: transparent !important;
+}
+
 p {line-height: 1.5em;}
 
 div.tags {
