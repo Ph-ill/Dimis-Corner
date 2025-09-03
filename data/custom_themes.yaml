@@ -1,18 +1,18 @@
 - name: "meow"
   site-bg: "/flowertile.png"
-  # Improved readability - Blue colors instead of hard-to-read yellow
-  accent-color: "#00e5ff"          # Vibrant Cyan - Main attention grabber, buttons, CTAs
-  select-color: "#00e5ff80"        # Vibrant Cyan with transparency for selections
-  link-color: "#00e5ff"           # Vibrant Cyan - All clickable links 
-  bg-color: "#f8f9fa"             # Off-white - Main background, better contrast with light colors
-  text-color: "#0a192f"           # Midnight Blue - Body text, readability & structure
-  bg2-color: "#f8f9fa"            # Off-white - Content areas, cards, sidebars
-  border-color: "#00e5ff"         # Vibrant Cyan - Borders, horizontal rules
-  post-shadow-color: "#0a192f20"  # Midnight Blue shadow with transparency
-  special-text-color: "#0a192f"   # Midnight Blue - Headings, strong visual hierarchy
-  post-header-color: "#0a192f"    # Midnight Blue - Post titles and headers
-  post-outline-color: "#00e5ff"   # Vibrant Cyan - Primary outlines, current page indicators
-  post-outline-color2: "#00e5ff"  # Vibrant Cyan - Secondary outlines, metadata highlights
+  # New Professional Color Palette Implementation
+  accent-color: "#e63946"          # Red Pantone - Links and highlighted text
+  select-color: "#e6394680"        # Red Pantone with transparency for selections
+  link-color: "#e63946"           # Red Pantone - All clickable links 
+  bg-color: "#f1faee"             # Honeydew - Light background colors
+  text-color: "#457b9d"           # Cerulean - General text
+  bg2-color: "#f1faee"            # Honeydew - Content areas, cards, sidebars
+  border-color: "#a8dadc"         # Non-photo Blue - Borders and outlines
+  post-shadow-color: "#1d355720"  # Berkeley Blue shadow with transparency
+  special-text-color: "#457b9d"   # Cerulean - General text for sidebar/special areas
+  post-header-color: "#1d3557"    # Berkeley Blue - Title text
+  post-outline-color: "#a8dadc"   # Non-photo Blue - Primary outlines
+  post-outline-color2: "#e63946"  # Red Pantone - Secondary outlines, highlights
   list-style:
     image: "/flower.png"
     # type: "+ "
