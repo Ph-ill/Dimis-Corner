@@ -61,6 +61,19 @@
             </ul>
         </nav>
     </aside>
+    
+    <!-- Warning popup image in top left corner -->
+    <img src="/Warningpopup2025.png" alt="Warning Popup" id="warning-popup" style="
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        width: 150px;
+        height: auto;
+        transform: rotate(-45deg);
+        z-index: 1000;
+        pointer-events: none;
+    ">
+    
     <main>
     {{ $limit := index (index .Site.Params "read-more") "length-limit" }}
     {{ $pages := where .Site.RegularPages "Section" "posts" }}
