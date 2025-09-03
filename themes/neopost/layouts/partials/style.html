@@ -273,27 +273,45 @@ a:hover {
     transition: all 0.2s ease;
 }
 
-/* More specific targeting for sidebar tag links */
-#sidebar ul li a, #sidebar .small-box a, .small-box ul li a {
-    color: #457b9d !important; /* Cerulean for better readability */
+/* Sidebar tag links with Non-photo Blue backgrounds */
+#sidebar ul li a, .small-box ul li a {
+    background-color: #a8dadc !important; /* Non-photo Blue background for tag links */
+    color: #1d3557 !important; /* Berkeley Blue text for contrast */
+    padding: 0.2rem 0.5rem !important;
+    border-radius: 0.3rem !important;
     font-weight: 600 !important;
+    margin: 0.1rem !important;
+    display: inline-block !important;
 }
 
-#sidebar ul li a:visited, #sidebar .small-box a:visited, .small-box ul li a:visited {
+#sidebar ul li a:visited, .small-box ul li a:visited {
+    background-color: #a8dadc !important;
     color: #1d3557 !important; /* Berkeley Blue for visited */
 }
 
-#sidebar ul li a:hover, #sidebar .small-box a:hover, .small-box ul li a:hover {
-    color: #e63946 !important; /* Red Pantone hover */
-    text-decoration: underline;
+#sidebar ul li a:hover, .small-box ul li a:hover {
+    background-color: #e63946 !important; /* Red Pantone hover background */
+    color: #f1faee !important; /* Honeydew text on Red background */
+    text-decoration: none !important;
+}
+
+/* Other sidebar links (non-tags) keep original styling */
+#sidebar .small-box a:not(ul li a) {
+    color: #f1faee !important; /* Honeydew for other links in small-box */
+    font-weight: 600 !important;
+    background: none !important;
 }
 
 .small-box {
     max-width: 240px;
     margin: auto;
-    border: 2px solid var(--bg-color);
+    background: #457b9d; /* Cerulean background for location/info section */
+    border: 4px double var(--bg-color2);
+    border-radius: 1em; /* Rounded corners like the bio section */
+    padding: .5em;
     font-size: 11px;
     line-height: 1.5rem;
+    color: #f1faee; /* Honeydew text for contrast */
 }
 
 #avatar {
@@ -319,10 +337,11 @@ a:hover {
 #bio {
     margin: 20px;
     padding: .2em;
-    background: var(--bg-color);
+    background: #457b9d; /* Cerulean background for about section */
     border: 4px double var(--bg-color2);
     border-radius: 2em;
     font-size: small;
+    color: #f1faee; /* Honeydew text for contrast on Cerulean background */
 }
 
 #bio p { margin: 1em; }
