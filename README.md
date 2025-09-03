@@ -1,6 +1,6 @@
 # Dimi's Corner
 
-A Hugo-based blog built for a friend, based on the [Hugo](https://gohugo.io/) static site generator and the [neopost](https://github.com/colorchestra/hugo-neopost-theme) theme.
+A Hugo-based blog built for a friend, based on the [Hugo](https://gohugo.io/) static site generator and the [neopost](https://github.com/salatine/neopost) theme.
 
 ## Credits
 
