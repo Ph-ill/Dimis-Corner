@@ -78,7 +78,7 @@
         
         #title-shadow {
             position: absolute;
-            top: 3px;
+            top: -2px; /* Moved up 5px from original 3px */
             left: 3px;
             color: #000000;
             z-index: 1;
@@ -89,6 +89,7 @@
         
         #title-text {
             position: relative;
+            top: -5px; /* Move main text up 5px */
             z-index: 2;
             white-space: nowrap;
         }
@@ -99,7 +100,8 @@
         
         .font-comic { font-family: 'Comic Neue', cursive !important; }
         .font-times { font-family: 'Times New Roman', Times, serif !important; }
-        .font-biz { font-family: 'BIZ UDMincho', serif !important; }
+        .font-biz { font-family: bizudmincho, serif !important; }
+        .font-simsun { font-family: simsun, serif !important; }
         
         /* Override default h1 styling for our dynamic title */
         header > #dynamic-title {
@@ -122,7 +124,8 @@
             const titleFonts = [
                 'font-comic',
                 'font-times', 
-                'font-biz'
+                'font-biz',
+                'font-simsun'
             ];
             
             function getRandomFont() {
