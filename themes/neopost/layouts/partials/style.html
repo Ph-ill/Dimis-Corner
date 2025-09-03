@@ -31,12 +31,19 @@
 * {
     box-sizing: border-box;
     font-family: 'BIZ UDMincho', 'Times New Roman', Times, serif;
-    /* Working anti-aliasing disable based on masonarmand.com */
-    -webkit-font-smoothing: none;
-    -moz-osx-font-smoothing: grayscale;
-    font-smooth: never;
-    text-rendering: optimizeSpeed;
-    image-rendering: crisp-edges;
+    /* Comprehensive crisp text rendering */
+    -webkit-font-smoothing: none !important;
+    -moz-osx-font-smoothing: grayscale !important;
+    font-smooth: never !important;
+    text-rendering: optimizeSpeed !important;
+    /* Multiple image-rendering values for browser compatibility */
+    image-rendering: -moz-crisp-edges !important;
+    image-rendering: -webkit-crisp-edges !important;
+    image-rendering: pixelated !important;
+    image-rendering: crisp-edges !important;
+    /* Additional sharpening */
+    text-shadow: none !important;
+    font-synthesis: none !important;
 }
 
 @-moz-document url-prefix() {
@@ -84,6 +91,15 @@ body {
 /* Allow JavaScript to override background with higher specificity */
 body[style*="background-image"] {
     background-color: transparent !important;
+}
+
+p, h1, h2, h3, h4, h5, h6, span, div, a, li {
+    image-rendering: -moz-crisp-edges !important;
+    image-rendering: -webkit-crisp-edges !important; 
+    image-rendering: pixelated !important;
+    image-rendering: crisp-edges !important;
+    -webkit-font-smoothing: none !important;
+    -moz-osx-font-smoothing: grayscale !important;
 }
 
 p {line-height: 1.5em;}
