@@ -237,7 +237,7 @@ a {
 }
 
 a:visited {
-    color: var(--text-color);
+    color: #00e5ff; /* Vibrant Cyan for visited links */
 }
 
 a:hover {
@@ -384,6 +384,7 @@ header h1 a:hover {
     font-size: smaller;
     margin: .2em;
     float: right;
+    color: #00e5ff; /* Vibrant Cyan for metadata */
 }
 
 .tag-item p {
@@ -544,6 +545,38 @@ header h1 a:hover {
     #single-post > article > #post-toc-mobile {
         display: inline;
     }
+}
+
+/* Blockquote styling per palette guide */
+blockquote {
+    border-left: 4px solid #00e5ff; /* Vibrant Cyan left border */
+    padding-left: 1rem;
+    margin-left: 0;
+    font-style: italic;
+    color: var(--text-color);
+}
+
+/* Tag styling - Electric Yellow backgrounds with Midnight Blue text */
+.tag a, .tags a {
+    background-color: #fffc00 !important; /* Electric Yellow background */
+    color: #0a192f !important; /* Midnight Blue text for readability */
+    padding: 0.3rem 0.6rem !important;
+    border-radius: 0.3rem !important;
+    text-decoration: none !important;
+    font-weight: bold !important;
+}
+
+.tag a:hover, .tags a:hover {
+    background-color: #00e5ff !important; /* Vibrant Cyan on hover */
+    color: #0a192f !important;
+}
+
+/* Horizontal rule styling */
+hr {
+    border: none;
+    height: 2px;
+    background-color: #00e5ff; /* Vibrant Cyan */
+    margin: 2rem 0;
 }
 
 pre {
