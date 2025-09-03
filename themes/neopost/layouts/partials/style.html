@@ -31,6 +31,11 @@
 * {
     box-sizing: border-box;
     font-family: 'BIZ UDMincho', 'Times New Roman', Times, serif;
+    /* Disable anti-aliasing for pixelated/crisp text */
+    -webkit-font-smoothing: none;
+    -moz-osx-font-smoothing: unset;
+    font-smooth: never;
+    text-rendering: optimizeSpeed;
 }
 
 @-moz-document url-prefix() {
