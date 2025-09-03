@@ -3,7 +3,7 @@ headless: true
 icon-use-flower-shape: false
 icon-path: "/icon.jpg"
 links:
-    - link: "https://dimiscorner.coolphill.com"
+    - link: "/"
       name: "Home"
 
     - link: "/portfolio"
