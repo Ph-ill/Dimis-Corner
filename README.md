@@ -45,16 +45,18 @@ The site uses Docker multi-stage builds and deploys via Portainer GitOps:
 ## File Structure
 
 ```
-├── content/en/          # English content
-│   ├── posts/           # Blog posts
-│   ├── portfolio/       # Portfolio page content
-│   └── sidebar/         # Sidebar configuration
+
+├── content/en/          \# English content
+│   ├── posts/           \# Blog posts
+│   ├── portfolio/       \# Portfolio page content
+│   └── sidebar/         \# Sidebar configuration
 ├── static/
-│   └── bg_tiles/        # Background tile images
-├── themes/neopost/      # Modified neopost theme
+│   └── bg\_tiles/        \# Background tile images
+├── themes/neopost/      \# Modified neopost theme
 ├── data/
-│   └── custom_themes.yaml # Color scheme configuration
-└── admin/               # Decap CMS configuration
+│   └── custom\_themes.yaml \# Color scheme configuration
+└── admin/               \# Decap CMS configuration
+
 ```
 
 ---
@@ -65,11 +67,13 @@ This repository contains both the source code for the blog's theme and infrastru
 
 ### Code License
 
-All source code used to generate and display this site is licensed under the **MIT License**. You can find a copy of the license in the `LICENSE` file.
+The source code used to generate and display this site is licensed under the **GNU General Public License v3.0**. This is a requirement due to the project's dependency on the `neopost` theme, which is also licensed under GPLv3.
+
+A copy of the license is available in the `LICENSE` file.
 
 ### Content License
 
-All creative content, including all text and images found within the blog posts, is the exclusive property of **Dimi's Corner**.
+All creative content, including all text and images found within the blog posts and portfolio sections, is the exclusive property of **Dimi's Corner**.
 
 **© 2025 Dimi's Corner. All Rights Reserved.**
 
@@ -77,6 +81,7 @@ This content is **not** open source. Permission is required for any reuse, repub
 
 ### Dependencies
 
-This project builds upon:
-- **[Hugo](https://gohugo.io/)** (Apache 2.0 License)
-- **[neopost theme](https://github.com/colorchestra/hugo-neopost-theme)** (See original theme license)
+This project is made possible by the following open-source software:
+
+-   **[Hugo](https://gohugo.io/)**, licensed under the [Apache License 2.0](https://github.com/gohugoio/hugo/blob/master/LICENSE).
+-   **[neopost theme](https://github.com/salatine/neopost)**, licensed under the [GNU GPL v3.0](https://github.com/salatine/neopost/blob/main/LICENSE). Our project is a derivative work of this theme.
