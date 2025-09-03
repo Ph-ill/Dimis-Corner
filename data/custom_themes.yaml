@@ -1,17 +1,17 @@
 - name: "meow"
   site-bg: "/flowertile.png"
-  accent-color: "#f55cc0"
-  select-color: "#ffc1e9"
-  link-color: "#5083C1"
-  bg-color: "#CEEAFF"
-  text-color: "#191919"
-  bg2-color: "white"
-  border-color: "#215697"
-  post-shadow-color: "#21569760"
-  special-text-color: "#215697"
-  post-header-color: "white"
-  post-outline-color: "#6EAAD6"
-  post-outline-color2: "#CEEAFF"
+  accent-color: "#fffc00"          # Bright yellow - primary accent
+  select-color: "#fff380"          # Light yellow for selections
+  link-color: "#00e5ff"           # Bright cyan - secondary accent
+  bg-color: "#e6fdff"             # Very light cyan background
+  text-color: "#191919"           # Keep dark text for readability
+  bg2-color: "white"              # Keep white for content areas
+  border-color: "#00b8cc"         # Darker cyan for borders
+  post-shadow-color: "#00b8cc40"  # Cyan shadow with transparency
+  special-text-color: "#00b8cc"   # Darker cyan for headers
+  post-header-color: "#191919"    # Dark text for post headers
+  post-outline-color: "#00e5ff"   # Bright cyan outlines
+  post-outline-color2: "#e6fdff"  # Light cyan secondary outline
   list-style:
     image: "/flower.png"
     # type: "+ "
