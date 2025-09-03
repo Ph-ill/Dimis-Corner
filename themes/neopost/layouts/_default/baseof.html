@@ -141,6 +141,9 @@
                 let textHTML = '';
                 let lastColor = null;
                 
+                // Choose ONE random font for the entire title
+                const titleFont = getRandomFont();
+                
                 for (let i = 0; i < titleText.length; i++) {
                     const char = titleText[i];
                     
@@ -150,15 +153,14 @@
                         continue;
                     }
                     
-                    const randomFont = getRandomFont();
                     const randomColor = getRandomColor(lastColor);
                     lastColor = randomColor;
                     
-                    // Shadow version (black)
-                    shadowHTML += `<span class="dynamic-letter ${randomFont}" style="color: #000000;">${char}</span>`;
+                    // Shadow version (black, same font for all)
+                    shadowHTML += `<span class="dynamic-letter ${titleFont}" style="color: #000000;">${char}</span>`;
                     
-                    // Main text version (colorful)
-                    textHTML += `<span class="dynamic-letter ${randomFont}" style="color: ${randomColor};">${char}</span>`;
+                    // Main text version (colorful, same font for all)
+                    textHTML += `<span class="dynamic-letter ${titleFont}" style="color: ${randomColor};">${char}</span>`;
                 }
                 
                 shadowElement.innerHTML = shadowHTML;
