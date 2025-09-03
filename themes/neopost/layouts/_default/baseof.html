@@ -19,26 +19,30 @@
     <meta name="robots" content="index, follow">
     <meta charset="utf-8">
     <script>
-        // Random background tile selector
+        // Dynamic random background tile selector
         document.addEventListener('DOMContentLoaded', function() {
             const backgroundTiles = [
-                '/bg_tiles/blobz.gif',
-                '/bg_tiles/celesestrellas.gif',
-                '/bg_tiles/labg.gif',
-                '/bg_tiles/lightblue.gif',
-                '/bg_tiles/skylo.gif',
-                '/bg_tiles/water2.webp',
-                '/bg_tiles/water3.jpg',
-                '/bg_tiles/wildlitebluesatinbg.jpg'
+                {{- $bgTilesDir := "bg_tiles" -}}
+                {{- range $path := (readDir (printf "static/%s" $bgTilesDir)) -}}
+                {{- if not .IsDir -}}
+                {{- $ext := path.Ext .Name | lower -}}
+                {{- if or (eq $ext ".jpg") (eq $ext ".jpeg") (eq $ext ".png") (eq $ext ".gif") (eq $ext ".webp") (eq $ext ".bmp") -}}
+                '/{{ $bgTilesDir }}/{{ .Name }}',
+                {{- end -}}
+                {{- end -}}
+                {{- end -}}
             ];
             
-            // Select a random background
-            const randomBg = backgroundTiles[Math.floor(Math.random() * backgroundTiles.length)];
-            
-            // Apply the background to the body
-            document.body.style.backgroundImage = `url(${randomBg})`;
-            document.body.style.backgroundRepeat = 'repeat';
-            document.body.style.backgroundAttachment = 'fixed';
+            // Only proceed if we have background tiles
+            if (backgroundTiles.length > 0) {
+                // Select a random background
+                const randomBg = backgroundTiles[Math.floor(Math.random() * backgroundTiles.length)];
+                
+                // Apply the background to the body
+                document.body.style.backgroundImage = `url(${randomBg})`;
+                document.body.style.backgroundRepeat = 'repeat';
+                document.body.style.backgroundAttachment = 'fixed';
+            }
         });
     </script>
 </head>
