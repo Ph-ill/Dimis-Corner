@@ -258,19 +258,34 @@ a:hover {
 
 /* Improved sidebar link styling for better readability */
 #sidebar a {
-    color: #0a192f !important; /* Midnight Blue - high contrast on white */
+    color: #2c5aa0 !important; /* Medium blue - better contrast on off-white */
     font-weight: 600; /* Semi-bold for better readability */
     text-decoration: none;
 }
 
 #sidebar a:visited {
-    color: #1e3a5f !important; /* Slightly lighter midnight blue for visited */
+    color: #1e3a5f !important; /* Darker blue for visited */
 }
 
 #sidebar a:hover {
     color: #00e5ff !important; /* Vibrant cyan on hover for interactivity */
     text-decoration: underline;
     transition: all 0.2s ease;
+}
+
+/* More specific targeting for sidebar tag links */
+#sidebar ul li a, #sidebar .small-box a, .small-box ul li a {
+    color: #2c5aa0 !important; /* Medium blue for better readability */
+    font-weight: 600 !important;
+}
+
+#sidebar ul li a:visited, #sidebar .small-box a:visited, .small-box ul li a:visited {
+    color: #1e3a5f !important;
+}
+
+#sidebar ul li a:hover, #sidebar .small-box a:hover, .small-box ul li a:hover {
+    color: #00e5ff !important;
+    text-decoration: underline;
 }
 
 .small-box {
