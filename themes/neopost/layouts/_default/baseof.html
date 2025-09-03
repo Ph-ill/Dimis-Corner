@@ -52,7 +52,7 @@
     </script>
 </head>
 <body>
-        <header><h1 id="{{ .Site.Title }}"><a href="{{ absLangURL "/" }}">{{ .Site.Title }}</a></h1></header>
+        <header><h1 id="{{ .Site.Title }}"><a href="{{ absLangURL "/" }}"><img src="/Title.png" alt="{{ .Site.Title }}" style="max-width: 100%; height: auto;"></a></h1></header>
 <main>
     {{ block "main" . }}{{ end }}
     {{ if .Param "nextprev" }}{{ partial "nextprev.html" . }}{{ end }}
